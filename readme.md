@@ -28,12 +28,30 @@ $ npm install --save estree-ancestors
 
 ### `ancestors(node, root)`
 
-Get array of the path of ancestors from `node` to `root`.
+Get array of ancestors.  Containing the path of nodes between `node`'s parent and `root`.
+
+```js
+ancestors(node, root)
+// [ parent, ...otherNodes, root ]
+```
 
 #### Parameters
 
  - `node` (Estree `Node`): The node you want to find ancestors of.
- - `root` (Estree `Node`): A base node, the last ancestors in your array, a patriarch.
+ - `root` (Estree `Node`): A base node, the last ancestors in your array.
+
+### `ancestors.parent(node, root)`
+
+Shorthand for `ancestors(node, root)[0]`.  Reads better.
+
+```js
+var root = esprima.parse('function foo () { return 1 }')
+var node = root.body[0].body.body[0].argument
+// The `1` Literal
+
+ancestors.parent(node, root)
+// ReturnStatement { ... }
+```
 
 ## License
 

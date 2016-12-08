@@ -1,5 +1,6 @@
 var step = require('estree-walk').step
 
+ancestors.parent = parent
 module.exports = ancestors
 
 function ancestors (node, root) {
@@ -29,4 +30,8 @@ function ancestors (node, root) {
   }
 
   return ancestors
+}
+
+function parent (node, root) {
+  return ancestors(node, root)[0]
 }

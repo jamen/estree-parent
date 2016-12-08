@@ -3,7 +3,7 @@ var esprima = require('esprima')
 var ancestors = require('./')
 
 test('finds acestors', function (t) {
-  t.plan(1)
+  t.plan(2)
 
   var root = esprima.parse(`
     function foo (x) {
@@ -15,12 +15,22 @@ test('finds acestors', function (t) {
           }
         }
       }
-    }
-    `)
+    }`)
 
   var node = root.body[0].body.body[0].consequent.body[1].cases[0]
 
-  var nodeAncestors = ancestors(node, root)
+  t.same(ancestors(node, root), [
+    root.body[0].body.body[0].consequent.body[1],
+    root.body[0].body.body[0].consequent,
+    root.body[0].body.body[0],
+    root.body[0].body,
+    root.body[0],
+    root
+  ], 'found ancestors')
 
-  t.is(nodeAncestors[nodeAncestors.length - 1], root, 'found ancestors correctly')
+  t.is(
+    ancestors.parent(node, root),
+    root.body[0].body.body[0].consequent.body[1],
+    'found parent'
+  )
 })

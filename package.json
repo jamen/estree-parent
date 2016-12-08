@@ -12,7 +12,6 @@
   "files": [
     "index.js"
   ],
-  "main": "index.js",
   "engines": {
     "node": ">=4"
   },
@@ -26,9 +25,11 @@
   "keywords": [
     "jamen",
     "estree",
-    "ancestors"
+    "esprima",
+    "ancestors",
+    "walk"
   ],
   "dependencies": {
-    "estree-walk": "0.0.0"
+    "estree-walk": "^0.2.0"
   }
 }
