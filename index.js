@@ -4,7 +4,7 @@ ancestors.parent = parent
 module.exports = ancestors
 
 function ancestors (node, root) {
-  // Create arrays of parent -> child relationships
+  // Create arrays of child -> parent relationships
   // Stop when we reach the node, or run out of nodes
   var relationship = [[], []]
   for (var pending = [root]; pending.length;) {
