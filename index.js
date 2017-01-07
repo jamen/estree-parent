@@ -24,11 +24,9 @@ function parent (node, source) {
       var end = pending.length
       while (end > start) {
         var child = pending[start++]
-        if (!parents.has(child)) {
-          parents.set(child, select)
-          if (child === node) {
-            parent = select
-          }
+        parents.set(child, select)
+        if (child === node) {
+          parent = select
         }
       }
     }
