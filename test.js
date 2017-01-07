@@ -1,8 +1,8 @@
 var test = require('tape')
 var esprima = require('esprima')
-var ancestors = require('./')
+var parent = require('./')
 
-test('finds acestors', function (t) {
+test('find parents', function (t) {
   t.plan(2)
 
   var root = esprima.parse(`
@@ -19,7 +19,13 @@ test('finds acestors', function (t) {
 
   var node = root.body[0].body.body[0].consequent.body[1].cases[0]
 
-  t.same(ancestors(node, root), [
+  t.is(
+    parent(node, root),
+    root.body[0].body.body[0].consequent.body[1],
+    'found parent'
+  )
+
+  t.same(parent.ancestors(node, root), [
     root.body[0].body.body[0].consequent.body[1],
     root.body[0].body.body[0].consequent,
     root.body[0].body.body[0],
@@ -27,10 +33,4 @@ test('finds acestors', function (t) {
     root.body[0],
     root
   ], 'found ancestors')
-
-  t.is(
-    ancestors.parent(node, root),
-    root.body[0].body.body[0].consequent.body[1],
-    'found parent'
-  )
 })

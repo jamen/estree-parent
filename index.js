@@ -1,37 +1,49 @@
 var step = require('estree-walk').step
+var WeakMap = require('es6-weak-map')
 
-ancestors.parent = parent
-module.exports = ancestors
+module.exports = parent
 
-function ancestors (node, root) {
-  // Create arrays of child -> parent relationships
-  // Stop when we reach the node, or run out of nodes
-  var relationship = [[], []]
-  for (var pending = [root]; pending.length;) {
-    var target = pending.shift()
-    if (target === node) break
-    var start = pending.length
-    step(target, pending)
-    var end = pending.length
+parent.ancestors = ancestors
+parent._parents = new WeakMap()
+var parents = parent._parents
 
-    // Create shared index between parent and children nodes
-    while (end > start) {
-      relationship[0].push(pending[start++])
-      relationship[1].push(target)
+function parent (node, source) {
+  // Handle no `source` param or `node.parent`:
+  if (!source || node.parent) {
+    return node.parent || null
+  }
+
+  // Get parent from cache:
+  var parent = parents.get(node)
+  if (!parent) {
+    // Create missing cache:
+    for (var pending = [source]; pending.length;) {
+      var select = pending.pop()
+      var start = pending.length
+      step(select, pending)
+      var end = pending.length
+      while (end > start) {
+        var child = pending[start++]
+        if (!parents.has(child)) {
+          parents.set(child, select)
+          if (child === node) {
+            parent = select
+          }
+        }
+      }
     }
   }
 
-  // Create an array of ancestors from the node using the relationships
-  var ancestors = []
-  for (var select = node; select;) {
-    var index = relationship[0].indexOf(select)
-    select = relationship[1][index]
-    if (select) ancestors.push(select)
-  }
-
-  return ancestors
+  return parent || null
 }
 
-function parent (node, root) {
-  return ancestors(node, root)[0]
+
+function ancestors (node, source) {
+  // Create an array of ancestors:
+  for (var ancestors = [], ancestor = node; ancestor;) {
+    if (ancestor = parent(ancestor, source)) {
+      ancestors.push(ancestor)
+    }
+  }
+  return ancestors
 }

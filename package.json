@@ -1,12 +1,12 @@
 {
-  "name": "estree-ancestors",
-  "description": "Get a node's ancestors up to a root node",
+  "name": "estree-parent",
+  "description": "Get parent of an ESTree node",
   "version": "0.1.1",
-  "homepage": "https://github.com/jamen/estree-ancestors",
+  "homepage": "https://github.com/jamen/estree-parent",
   "author": "Jamen Marz (https://git.io/jamen)",
-  "repository": "jamen/estree-ancestors",
+  "repository": "jamen/estree-parent",
   "bugs": {
-    "url": "https://github.com/jamen/estree-ancestors/issues"
+    "url": "https://github.com/jamen/estree-parent/issues"
   },
   "license": "MIT",
   "files": [
@@ -19,6 +19,7 @@
     "test": "node test"
   },
   "devDependencies": {
+    "benchmark": "^2.1.3",
     "esprima": "^3.1.2",
     "tape": "^4.6.3"
   },
@@ -26,10 +27,12 @@
     "jamen",
     "estree",
     "esprima",
-    "ancestors",
-    "walk"
+    "parent",
+    "parents",
+    "ancestors"
   ],
   "dependencies": {
+    "es6-weak-map": "^2.0.1",
     "estree-walk": "^0.2.0"
   }
 }
