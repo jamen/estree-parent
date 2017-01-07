@@ -1,7 +1,7 @@
 {
   "name": "estree-parent",
   "description": "Get parent of an ESTree node",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "homepage": "https://github.com/jamen/estree-parent",
   "author": "Jamen Marz (https://git.io/jamen)",
   "repository": "jamen/estree-parent",
